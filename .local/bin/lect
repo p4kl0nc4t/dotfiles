@@ -1,0 +1,23 @@
+#!/bin/bash
+
+if [ -z $1 ]
+then
+	echo "usage: $0 [-l] <lecture name>";
+	exit;
+fi
+
+KEYWORD=$1;
+
+if [ "$1" = "-l" ] && [ -n $2 ]
+then
+	KEYWORD=$2;
+fi
+
+LINK=`cat ~/.class_links | grep -iA 1 $KEYWORD | tail -n 1`;
+
+if [ "$1" = "-l" ]
+then
+	echo $LINK;
+else
+	xdg-open $LINK;
+fi

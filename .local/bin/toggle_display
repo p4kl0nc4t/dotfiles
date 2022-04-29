@@ -1,0 +1,11 @@
+#!/bin/bash
+
+CBR=$(brightnessctl g)
+
+if [ $CBR -eq 0 ]
+then
+	brightnessctl s 1000
+else
+	brightnessctl s 0
+fi
+
