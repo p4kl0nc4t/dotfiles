@@ -1,0 +1,12 @@
+[user]
+	email = me@lcat.dev
+	name = Faiz Jazadi
+	signingkey = 1DFADAEFFBE16F26
+[commit]
+	gpgsign = true
+[format]
+	signoff = 1
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
