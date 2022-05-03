@@ -19,6 +19,13 @@ noremap <F3> :Autoformat<CR>
 Plugin 'ctrlpvim/ctrlp.vim'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
+Plugin 'mattn/emmet-vim'
+
+Plugin 'sheerun/vim-polyglot'
+let g:polyglot_disabled = ['autoindent']
+
+Plugin 'tpope/vim-sleuth'
+
 call vundle#end()
 
 filetype indent plugin on
