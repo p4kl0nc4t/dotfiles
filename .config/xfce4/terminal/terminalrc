@@ -27,10 +27,13 @@ MiscNewTabAdjacent=FALSE
 MiscSearchDialogOpacity=100
 MiscShowUnsafePasteDialog=TRUE
 FontName=JetBrains Mono 11
-BackgroundDarkness=0.950000
-ColorPalette=#000000;#cc0000;#4e9a06;#c4a000;#3465a4;#75507b;#06989a;#d3d7cf;#555753;#ef2929;#8ae234;#fce94f;#739fcf;#ad7fa8;#34e2e2;#eeeeec
+BackgroundDarkness=1.000000
+ColorPalette=#000000;#ff0000;#38de21;#ffe50a;#1460d2;#ff005d;#00bbbb;#bbbbbb;#555555;#f40e17;#3bd01d;#edc809;#5555ff;#ff55ff;#6ae3fa;#ffffff
 ScrollingBar=TERMINAL_SCROLLBAR_NONE
 CustomCommand=/home/cat/.local/bin/run-tmux
 RunCustomCommand=TRUE
 BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
+ColorCursor=#ffffff
+ColorBackground=#132738
+ColorCursorUseDefault=FALSE
 
