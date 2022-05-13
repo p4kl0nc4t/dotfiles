@@ -1,0 +1,4 @@
+#!/bin/bash
+cd ~/Downloads
+LATEST=$(ls -Art | tail -n 1)
+xdg-open $LATEST
