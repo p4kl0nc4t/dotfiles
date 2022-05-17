@@ -27,6 +27,8 @@ syntax on
 set hlsearch number relativenumber
 set tabstop=8
 
+nnoremap <silent> <C-l> :nohl<CR><C-l>
+
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_CompileRule_pdf = 'pdflatex -synctex=1 --shell-escape -interaction=nonstopmode $*'
 
