@@ -15,14 +15,15 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 
 Plugin 'mattn/emmet-vim'
 
+Plugin 'tpope/vim-sleuth'
+
 Plugin 'sheerun/vim-polyglot'
 let g:polyglot_disabled = ['autoindent']
-
-Plugin 'tpope/vim-sleuth'
 
 call vundle#end()
 
 filetype indent plugin on
+filetype indent on
 syntax on
 set hlsearch number relativenumber
 set tabstop=8
