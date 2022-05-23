@@ -241,6 +241,7 @@ exec --no-startup-id xautolock -locker i3lock-blur
 exec --no-startup-id diodon
 # exec --no-startup-id compton -b
 exec --no-startup-id picom -b
+exec --no-startup-id unclutter
 
 for_window [class="Spotify"] move to workspace $ws6
 for_window [class="Firefox"] move to workspace $ws1
