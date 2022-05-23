@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+
+import json
+import subprocess
+
+TERMINAL_CLASS = 'Xfce4-terminal'
+TERMINAL_COMMAND = 'xfce4-terminal'
+
+
+def get_tree():
+    cp = subprocess.run(['i3-msg', '-t', 'get_tree'], stdout=subprocess.PIPE)
+    return json.loads(cp.stdout)
+
+
+def get_workspaces():
+    cp = subprocess.run(['i3-msg', '-t', 'get_workspaces'],
+                        stdout=subprocess.PIPE)
+    return json.loads(cp.stdout)
+
+
+def get_active_ws_id():
+    workspaces = get_workspaces()
+    for workspace in workspaces:
+        if workspace['focused']:
+            return workspace['id']
+    return None
+
+
+def search_id(node, key):
+    return node['id'] == key
+
+
+def search_window_class(node, key):
+    return node['window'] is not None \
+        and node['window_properties']['class'] == key
+
+
+def search_tree(tree, search_func, key):
+    if search_func(tree, key):
+        return tree
+    elif not tree['nodes']:
+        return None
+    for node in tree['nodes']:
+        sub_tree = search_tree(node, search_func, key)
+        if sub_tree:
+            return sub_tree
+
+
+def focus_window(id_):
+    return subprocess.run(['i3-msg', f'[id={id_}] focus'])
+
+
+def main():
+    aws_tree = search_tree(get_tree(), search_id, get_active_ws_id())
+    term_window = search_tree(aws_tree, search_window_class, TERMINAL_CLASS)
+    if not term_window:
+        subprocess.Popen([TERMINAL_COMMAND])
+    else:
+        focus_window(term_window['window'])
+
+
+if __name__ == '__main__':
+    main()
