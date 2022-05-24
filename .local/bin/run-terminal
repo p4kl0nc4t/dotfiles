@@ -5,6 +5,7 @@ import subprocess
 
 TERMINAL_CLASS = 'Xfce4-terminal'
 TERMINAL_COMMAND = 'xfce4-terminal'
+TITLE_PREFIX = 'Terminal - main'
 
 
 def get_tree():
@@ -32,7 +33,8 @@ def search_id(node, key):
 
 def search_window_class(node, key):
     return node['window'] is not None \
-        and node['window_properties']['class'] == key
+        and node['window_properties']['class'] == key \
+        and node['window_properties']['title'].startswith(TITLE_PREFIX)
 
 
 def search_tree(tree, search_func, key):
