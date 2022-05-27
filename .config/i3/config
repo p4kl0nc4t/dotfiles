@@ -220,6 +220,8 @@ mode "spotify" {
 	bindsym k exec --no-startup-id "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
 	bindsym h exec --no-startup-id "~/.local/bin/spotifyvol -"
 	bindsym l exec --no-startup-id "~/.local/bin/spotifyvol +"
+        bindsym x exec --no-startup-id "killall spotify"
+        bindsym r exec --no-startup-id "killall spotify"; exec --no-startup-id "spotify"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
