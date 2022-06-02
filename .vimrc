@@ -14,6 +14,9 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'preservim/nerdtree'
 Plugin 'itchyny/lightline.vim'
 Plugin 'tpope/vim-sensible'
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
+
 
 " Map <F3> to Autoformat
 noremap <F3> :Autoformat<CR>
@@ -41,10 +44,13 @@ set noshowmode
 
 call vundle#end()
 
+" Turn on detection, indent, and plugin
 filetype indent plugin on
+" Turn on syntax highlighting
 syntax on
 set hlsearch number relativenumber
 
+" Map <C-l> to unhighlight search results
 nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 " Configure LaTeXSuite
@@ -56,3 +62,14 @@ let g:formatters_java = ['clangformat']
 
 " Map F2 to save file then compile (LaTeX-Suite)
 map <f2> :w<cr><leader>ll
+
+" Disable spell checking in vim-pandoc
+let g:pandoc#modules#disabled = ["spell"]
+" Use hard wrap for vim-pandoc formatting with tw of 79
+let g:pandoc#formatting#mode = 'ha'
+let g:pandoc#formatting#textwidth = 79
+" Use ATX headers for vim-pandoc formatting
+let g:pandoc#formatting#extra_equalprg = '--atx-headers'
+
+autocmd filetype pandoc nnoremap <leader>pp :Pandoc pdf<cr>
+autocmd filetype pandoc nnoremap <leader>pv :Pandoc! pdf<cr>
