@@ -16,7 +16,8 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'tpope/vim-sensible'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
-
+Plugin 'dense-analysis/ale'
+Plugin 'airblade/vim-gitgutter'
 
 " Map <F3> to Autoformat
 noremap <F3> :Autoformat<CR>
@@ -71,5 +72,6 @@ let g:pandoc#formatting#textwidth = 79
 " Use ATX headers for vim-pandoc formatting
 let g:pandoc#formatting#extra_equalprg = '--atx-headers'
 
+" Add pandoc filetype keymappings: compile to pdf, view pdf
 autocmd filetype pandoc nnoremap <leader>pp :Pandoc pdf<cr>
-autocmd filetype pandoc nnoremap <leader>pv :Pandoc! pdf<cr>
+autocmd filetype pandoc nnoremap <leader>pv :call system('xdg-open ' . expand('%:r') . '.pdf &')<cr>
