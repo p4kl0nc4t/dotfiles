@@ -4,20 +4,53 @@ filetype off                  " required
 " Set up Vundle
 set rtp+=~/.vim/bundle/Vundle.vim
 
+
+" Plugins installed using apt: latexsuite, youcompleteme
+
 call vundle#begin()
+" Vundle
 Plugin 'VundleVim/Vundle.vim'
+
+" Formatting
 Plugin 'Chiel92/vim-autoformat'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'mattn/emmet-vim'
-Plugin 'sheerun/vim-polyglot'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'preservim/nerdtree'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-surround'
+
+" Navigation
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'tpope/vim-unimpaired'
+
+" Syntax helper/highlighting
+Plugin 'sheerun/vim-polyglot'
+Plugin 'mattn/emmet-vim'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
+
+" Filetype helper
+Plugin 'vim-pandoc/vim-pandoc'
+
+" Linting
+Plugin 'dense-analysis/ale'
+
+" Git
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+
+" Extras/aestethics
+Plugin 'GlennLeo/cobalt2'
 Plugin 'itchyny/lightline.vim'
 Plugin 'tpope/vim-sensible'
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
-Plugin 'dense-analysis/ale'
-Plugin 'airblade/vim-gitgutter'
+Plugin 'glts/vim-radical'
+Plugin 'tpope/vim-repeat'
+Bundle 'ervandew/supertab'
+
+" Snippets engine
+Plugin 'SirVer/ultisnips'
+
+" Snippets
+Plugin 'honza/vim-snippets'
+
+call vundle#end()
 
 " Map <F3> to Autoformat
 noremap <F3> :Autoformat<CR>
@@ -33,23 +66,20 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 " Disable sensible in vim-polyglot
 let g:polyglot_disabled = ['sensible']
 
-" Keyboard mappings for NERDTree
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
-
-" Lightline configuration
-set laststatus=2
-set noshowmode
-
-call vundle#end()
-
 " Turn on detection, indent, and plugin
 filetype indent plugin on
 " Turn on syntax highlighting
 syntax on
+" Turn on highlight on search, line numbering, and relative line numbering
 set hlsearch number relativenumber
+" Enable expandtab
+set expandtab
+
+" Enable 24-bit true color
+set termguicolors
+let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+set bg=dark
 
 " Map <C-l> to unhighlight search results
 nnoremap <silent> <C-l> :nohl<CR><C-l>
@@ -67,11 +97,21 @@ map <f2> :w<cr><leader>ll
 " Disable spell checking in vim-pandoc
 let g:pandoc#modules#disabled = ["spell"]
 " Use hard wrap for vim-pandoc formatting with tw of 79
-let g:pandoc#formatting#mode = 'ha'
-let g:pandoc#formatting#textwidth = 79
-" Use ATX headers for vim-pandoc formatting
-let g:pandoc#formatting#extra_equalprg = '--atx-headers'
+" let g:pandoc#formatting#mode = 'hA'
+" let g:pandoc#formatting#textwidth = 80
+" Use ATX headers for vim-pandoc formatting, also keep metadata
+let g:pandoc#formatting#extra_equalprg = '--atx-headers -s'
 
 " Add pandoc filetype keymappings: compile to pdf, view pdf
 autocmd filetype pandoc nnoremap <leader>pp :Pandoc pdf<cr>
 autocmd filetype pandoc nnoremap <leader>pv :call system('xdg-open ' . expand('%:r') . '.pdf &')<cr>
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
