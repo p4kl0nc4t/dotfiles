@@ -123,7 +123,7 @@ set $ws6 "6:media"
 set $ws7 "7:meet"
 set $ws8 "8:misc"
 set $ws9 "9:calendar"
-set $ws10 "10"
+set $ws10 "10:fullscreen"
 
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
@@ -161,6 +161,9 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# screenshot
+bindsym Control+Mod1+l exec "i3lock-blur"
 
 # diodon clipboard manage
 bindsym $mod+Shift+w exec diodon
