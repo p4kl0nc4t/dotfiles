@@ -5,7 +5,7 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 
 
-" Plugins installed using apt: latexsuite, youcompleteme
+" Plugins installed using apt: latexsuite
 
 call vundle#begin()
 " Vundle
@@ -25,6 +25,8 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'mattn/emmet-vim'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
+Plugin 'ledger/vim-ledger'
+Plugin 'mboughaba/i3config.vim'
 
 " Filetype helper
 Plugin 'vim-pandoc/vim-pandoc'
@@ -42,13 +44,6 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'tpope/vim-sensible'
 Plugin 'glts/vim-radical'
 Plugin 'tpope/vim-repeat'
-Bundle 'ervandew/supertab'
-
-" Snippets engine
-Plugin 'SirVer/ultisnips'
-
-" Snippets
-Plugin 'honza/vim-snippets'
 
 call vundle#end()
 
@@ -97,8 +92,8 @@ map <f2> :w<cr><leader>ll
 " Disable spell checking in vim-pandoc
 let g:pandoc#modules#disabled = ["spell"]
 " Use hard wrap for vim-pandoc formatting with tw of 79
-" let g:pandoc#formatting#mode = 'hA'
-" let g:pandoc#formatting#textwidth = 80
+let g:pandoc#formatting#mode = 'ha'
+let g:pandoc#formatting#textwidth = 80
 " Use ATX headers for vim-pandoc formatting, also keep metadata
 let g:pandoc#formatting#extra_equalprg = '--atx-headers -s'
 
@@ -106,12 +101,28 @@ let g:pandoc#formatting#extra_equalprg = '--atx-headers -s'
 autocmd filetype pandoc nnoremap <leader>pp :Pandoc pdf<cr>
 autocmd filetype pandoc nnoremap <leader>pv :call system('xdg-open ' . expand('%:r') . '.pdf &')<cr>
 
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
+" Paragraph motion to move by transaction (ledger)
+au FileType ledger noremap { ?^\d<CR>
+au FileType ledger noremap } /^\d<CR>
 
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+" Make vim-ledger use hledger
+let g:ledger_bin = '/usr/bin/hledger'
+let g:ledger_is_hledger = 1
+if !exists('g:ledger_extra_options')
+	let g:ledger_extra_options = ''
+endif
+
+" Vim ledger
+au FileType ledger inoremap <silent> <Tab> <C-r>=ledger#autocomplete_and_align()<CR>
+au FileType ledger vnoremap <silent> <Tab> :LedgerAlign<CR>
+au FileType ledger noremap <silent><buffer> <F5> :call ledger#transaction_state_toggle(line('.'), '!* ')<CR>
+au BufNewFile,BufRead *.ldg,*.ledger setf ledger | comp ledger
+let g:ledger_maxwidth = 120
+let g:ledger_fold_blanks = 1
+function LedgerSort()
+	:%! hledger print
+	:%LedgerAlign
+	:normal Gdd
+endfunction
+command LedgerSort call LedgerSort()
+

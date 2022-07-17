@@ -18,7 +18,7 @@ with pulsectl.Pulse('spotify-volume') as pulse:
     for sink_input in pulse.sink_input_list():
         if sink_input.name == 'Spotify':
             spotify = sink_input
-    
+
     if not spotify:
         sys.exit(-1)
 
@@ -32,4 +32,3 @@ with pulsectl.Pulse('spotify-volume') as pulse:
         vol = 0
 
     pulse.volume_set_all_chans(spotify, vol)
-
